@@ -1,0 +1,63 @@
+<div>
+    <div class="left-panel">
+        <img src="../../../../assets/logo/Logo.png" alt="logo">
+    </div>
+    <form [formGroup]="userRegisterForm" (ngSubmit)="register()">
+        <h2>Register</h2>
+        <div class="control">
+            <label for="name">Name</label><br>
+            <input type="text" id="name" formControlName="name" autofocus />
+            @if(userRegisterForm.controls['name'].invalid
+            &&userRegisterForm.controls['name'].dirty&&userRegisterForm.controls['name'].touched){
+            <p class="error">Name must start with an uppercase letter and can be in CamelCase or have a single space
+                between words.</p>
+            }
+        </div>
+        <div class="control">
+            <label for="email">Email</label><br>
+            <input type="text" id="email" formControlName="email" />
+            @if(userRegisterForm.controls['email'].invalid&&userRegisterForm.controls['email'].dirty&&userRegisterForm.controls['email'].touched&&!userRegisterForm.controls['email'].errors?.['emailExist']){
+            <p class="error">email is invalid!</p>
+            }
+            @if(userRegisterForm.controls['email'].errors?.['emailExist']){
+            <p class="error">email Exist!</p>
+            }
+        </div>
+        <div class="control-row" formGroupName="passwords">
+            <div class="control">
+                <label for="password">Password</label><br>
+                <input type="password" id="password" formControlName="password" />
+                @if
+                (userRegisterForm.get('passwords.password')?.touched&&userRegisterForm.get('passwords.password')?.dirty&&userRegisterForm.get('passwords.password')?.invalid)
+                {
+                <p class="error">password is invalid!</p><br>
+                }
+            </div>
+            <div class="control">
+                <label for="confirmPassword">Confirm Password</label><br>
+                <input type="password" id="confirmPassword" formControlName="confirmPassword" />
+                @if
+                (userRegisterForm.get('passwords.confirmPassword')?.touched&&userRegisterForm.get('passwords.confirmPassword')?.dirty&&userRegisterForm.get('passwords.confirmPassword')?.invalid)
+                {
+                <p class="error">Please enter same as password</p>
+                }
+            </div>
+        </div>
+        <div class="control">
+            <label for="phoneNumber">Phone Number</label><br>
+            <input type="text" id="phoneNumber" formControlName="phoneNumber" />
+            @if
+            (userRegisterForm.controls['phoneNumber'].invalid&&userRegisterForm.controls['phoneNumber'].touched&&userRegisterForm.controls['phoneNumber'].dirty)
+            {
+            <p class="error">enter valid phone number</p>
+            }
+        </div>
+        <div class="button-control">
+            <button type="submit">Register</button>
+            <p>Already have an account? <strong routerLink="/login">login</strong></p>
+        </div>
+    </form>
+</div>
+@if(ERROR()){
+<app-error-pop-up>{{ERROR()}}</app-error-pop-up>
+}

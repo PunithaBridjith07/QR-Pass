@@ -1,0 +1,28 @@
+<div>
+    <div class="left-panel">
+        <img src="../../../../assets/logo/Logo.png" alt="logo">
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <h2>Login</h2>
+        <div class="control">
+            <label for="email">Email</label><br>
+            <input type="text" id="email"formControlName="email"  autofocus/>
+            @if(loginForm.controls['email'].dirty&&loginForm.controls['email'].touched&&loginForm.controls['email'].invalid){
+            <p class="error">email is invalid!</p>
+            }
+        </div>
+        <div class="control">
+            <label for="password">Password</label><br>
+            <input type="password" id="password" formControlName="password" />
+            @if
+            (loginForm.controls['password'].touched&&loginForm.controls['password'].dirty&&loginForm.controls['password'].errors?.['invalidCredentials'])
+            {
+            <p class="error">password is invalid!</p>
+            }
+        </div>
+        <div class="button-control">
+            <button type="submit">Login</button>
+            <p>Does have an account? <strong routerLink="/register">create account</strong></p>
+        </div>
+    </form>
+</div>

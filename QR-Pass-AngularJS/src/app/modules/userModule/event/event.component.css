@@ -1,0 +1,348 @@
+.event-container {
+    width: 100vw;
+}
+
+.event {
+    padding: 20px 40px;
+    position: relative;
+}
+
+.event-go-back {
+    position: absolute;
+    margin: 25px;
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    border-radius: 50%;
+    border: 0;
+    font-size: larger;
+    display: none;
+}
+
+.event-go-back:hover {
+    color: white;
+    background-color: blueviolet;
+}
+
+.event:hover .event-go-back {
+    display: block;
+}
+
+.event:hover .book-button {
+    display: block;
+    animation: fadeButton 0.5s ease-in-out;
+}
+
+.event-content {
+    display: flex;
+    height: 40%;
+}
+
+.event-image {
+    width: 50%;
+}
+
+.event-detail {
+    position: relative;
+    padding: 20px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.event-info {
+    font-size: 16px;
+    color: #555;
+}
+
+.event-date-time {
+    display: flex;
+    justify-content: space-around;
+}
+
+.event-pricing p {
+    font-size: 50px;
+}
+
+.event-date-time p,
+.event-pricing {
+    font-size: 20px;
+    font-weight: 500;
+    color: #444;
+}
+
+.event-pricing {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+}
+
+.event-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e63946;
+}
+
+.event-seats {
+    font-size: 14px;
+    color: #666;
+}
+
+.event-offer {
+    background: #ffeb3b;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    text-align: center;
+}
+
+.book-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    display: none;
+}
+
+.book-button:hover {
+    background-color: white;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
+
+@keyframes fadeButton {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* About Event Section */
+h4 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 30px;
+    border-bottom: 3px solid #e63946;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Event Description */
+.event-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+}
+
+/* Seat Selection Overlay */
+.seat-selection-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Seat Selection Division */
+.seat-selection-division {
+    background: white;
+    padding: 20px;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    border: 5px solid blueviolet;
+}
+
+
+.seat-selection-division>.cross-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+.seat-status {
+    display: flex;
+    gap: 20px;
+    justify-content: space-evenly;
+}
+
+.seat-status input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 20%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.seat-status input[type="checkbox"]:checked {
+    opacity: 1;
+}
+
+.seat-container {
+    margin: 0 auto;
+    padding: 50px;
+    width: 60%;
+}
+
+.seat-container h5 {
+    font-size: 15px;
+    text-align: center;
+}
+
+.seat-container hr {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.seats {
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    gap: 10px;
+    justify-content: center;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 20%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none
+}
+
+.custom-checkbox input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 20%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: none;
+    /* Hide default checkbox */
+}
+
+.seat-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    font-weight: lighter;
+    font-size: 10px;
+}
+
+.available {
+    background: #d3d3d3;
+}
+
+.selected:checked {
+    background: red;
+}
+
+.sold {
+    background: blueviolet;
+}
+
+/* Seat Status Colors */
+.available .seat-box {
+    background: #d3d3d3;
+}
+
+.selected .seat-box {
+    background: red;
+    color: white;
+}
+
+.sold .seat-box {
+    background: blueviolet;
+    color: white;
+}
+
+.next-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.next-button:hover {
+    background-color: white;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

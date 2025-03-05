@@ -1,0 +1,14 @@
+<div class="header-container">
+    <img src="../assets/logo/Logo.png" alt="Qr-Pass" routerLink="/"/>
+    @if (!loggedUser()) {
+    <div class="authen-container">
+        <button type="button" routerLink="" class="header-button" routerLink="/login">login</button>
+    </div>
+    }
+    @if (loggedUser()) {
+    <div class="profile-container">
+        <img src="../../../../assets/profile/profile.png" class="profile" alt="profile">
+        <button type="submit" class="logout-button" (click)="onLogOut()">log out</button>
+    </div>
+    }
+</div>

@@ -1,0 +1,215 @@
+.subscription {
+    background-color: white;
+    filter: drop-shadow(0 0 5px lightgrey);
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: "Anton", serif;
+}
+
+.subscription h1 {
+    font-size: 40px;
+    margin: auto auto;
+    text-align: center;
+}
+
+.subscription>button {
+    margin: auto 50px;
+    height: 50%;
+    width: 10%;
+    font-size: 30px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    color: white;
+
+    &:hover {
+        background-color: transparent;
+        border: 1.5px solid blueviolet;
+        color: blueviolet;
+    }
+}
+
+.subscription-plan-division {
+    width: 80vw;
+    height: auto;
+    padding: 0;
+}
+
+.subscription-plan-division>h2 {
+    margin: 20px 0 20px 20px;
+    font-size: 30px;
+}
+
+.subscription-plan-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.subscription-plan-card {
+    list-style-type: none;
+    height: 250px;
+    width: 200px;
+    background-color: white;
+    filter: drop-shadow(0 0 5px lightgrey);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+
+.subscription-plan-card:hover {
+    transform: scale(1.05);
+}
+
+.subscription-plan-card h3 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: blueviolet;
+}
+
+.subscription-plan-card h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: grey;
+}
+
+.subscription-plan-card p {
+    font-size: 16px;
+    color: grey;
+    margin-bottom: 15px;
+}
+
+.subscription-action {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.subscription-action button {
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.subscription-action button:hover {
+    background-color: transparent;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
+
+.subscriptionForm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.subscriptionForm-content {
+    background: white;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.subscriptionForm-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+/* Form inputs */
+.control {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.control input {
+    padding: 8px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Button styles */
+.button-control {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.button-control button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.button-control button:first-child {
+    background: grey;
+    color: white;
+}
+
+.button-control button:last-child {
+    background: blueviolet;
+    color: white;
+}
+
+.button-control button:last-child:hover {
+    background: transparent;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
+
+[formGroupName].ng-invalid.ng-touched.ng-dirty input {
+    border-color: red;
+    background-color: lightcoral;
+}
+
+[formGroupName].ng-valid.ng-touched input {
+    border-color: blueviolet;
+}
+
+input.ng-invalid.ng-touched.ng-dirty {
+    border-color: red;
+    background-color: lightcoral;
+}
+
+input.ng-valid.ng-touched {
+    border-color: blueviolet;
+}
+
+.error {
+    color: red;
+}

@@ -1,0 +1,199 @@
+@media screen and (max-width: 1440px) {
+  :host {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    height: 15vh;
+    background-color: white;
+    filter: drop-shadow(0 0 2px blueviolet);
+    z-index: 999;
+  }
+
+  .header-container {
+    height: 100%;
+    width: 90%;
+    padding: 0 5% 0 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .header-container>img {
+    margin: auto 0;
+    height: 60px;
+    width: 150px;
+    padding: 10px 0 10px;
+    cursor: pointer;
+  }
+
+  .authen-container {
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .authen-container .header-button {
+    height: 50px;
+    width: 100px;
+    align-self: center;
+    justify-content: center;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    border: none;
+    color: white;
+  }
+
+  .authen-container .header-button:hover {
+    background-color: white;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+  }
+
+  .profile-container {
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .profile {
+    height: 60%;
+    width: 80%;
+    cursor: pointer;
+    margin: auto 0;
+  }
+
+  .logout-button {
+    height: 50px;
+    width: 100px;
+    top: 80%;
+    position: absolute;
+    align-self: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: "Anton", serif;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    color: white;
+    display: none;
+  }
+
+  .logout-button:hover {
+    background-color: white;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+    
+  }
+  
+  .profile-container:hover .logout-button {
+    display: block;
+  }
+}
+
+/* @media screen and (max-width: 2560px) {
+  :host {
+    width: 100vw;
+    height: 15vh;
+    background-color: white;
+    filter: drop-shadow(0 0 2px blueviolet);
+    position: relative;
+    z-index: 999;
+  }
+
+  .header-container {
+    height: 100%;
+    width: 90%;
+    padding: 0 5% 0 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .header-container>img {
+    height: 70px;
+    width: 150px;
+    padding: 10px 0 10px;
+  }
+
+  .authen-container {
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .authen-container .header-button {
+    height: 50px;
+    width: 100px;
+    align-self: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: "Anton", serif;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    color: white;
+  }
+
+  .authen-container .header-button:hover {
+    background-color: white;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+  }
+
+  .profile-container {
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .profile {
+    height: 60%;
+    width: 80%;
+    cursor: pointer;
+    margin: auto 0;
+  }
+
+  .logout-button {
+    height: 50px;
+    width: 100px;
+    top: 80%;
+    position: absolute;
+    align-self: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: "Anton", serif;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    color: white;
+    display: none;
+  }
+
+  .logout-button:hover {
+    background-color: white;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+  }
+
+  .profile-container:hover .logout-button {
+    display: block;
+
+  }
+} */

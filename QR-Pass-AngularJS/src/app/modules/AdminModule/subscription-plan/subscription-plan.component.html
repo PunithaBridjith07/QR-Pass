@@ -1,0 +1,88 @@
+<div class="subscription">
+    <h1>Subscription Details</h1>
+    <button type="button" (click)="triggerFormVisible()">&#10010;</button>
+</div>
+@if (activeSubscriptionPlan.length>0) {
+<div class="subscription-plan-division">
+    <h2>Active Pricing Plan</h2>
+    <ul class="subscription-plan-cards">
+        @for (plan of activeSubscriptionPlan; track $index) {
+        <li class="subscription-plan-card">
+            <h3>{{plan.data.price|currency:'INR'}}</h3>
+            <h5>{{plan.data.daysvalid}} Days</h5>
+            <p>{{plan.data.description}}</p>
+            <div class="subscription-action button">
+                <button type="button" (click)="onUpdateSubscriptionPlanDetails(plan._id)">Update</button>
+                <button type="button" (click)="onDeleteSubscriptionPlan(plan._id)">Delete</button>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+}
+@if (inActiveSubscriptionPlan.length>0) {
+<div class="subscription-plan-division">
+    <h2>In Active Pricing Plan</h2>
+    <ul class="subscription-plan-cards">
+        @for (plan of inActiveSubscriptionPlan; track $index) {
+        <li class="subscription-plan-card">
+            <h3>{{plan.data.price|currency:'INR'}}</h3>
+            <h5>{{plan.data.daysvalid}} Days</h5>
+            <p>{{plan.data.description}}</p>
+            <div class="subscription-action button">
+                <button type="button" (click)="onUpdateSubscriptionPlanDetails(plan._id)">Update</button>
+                <button type="button" (click)="onAddExistSubscriptionPlan(plan._id)">Add</button>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+}@if (isFormVisible()) {
+<div class="subscriptionForm-overlay">
+    <div class="subscriptionForm-content">
+        <button class="subscriptionForm-close" (click)="triggerCancel()">✖</button>
+        <form [formGroup]="subscriptionForm">
+            <div class="control">
+                <label for="price">Price</label>
+                <input type="text" id="price" inputmode="numeric" formControlName="price"><br>
+            </div>
+            @if
+            (subscriptionForm.controls['price'].invalid&&subscriptionForm.controls['daysValid'].dirty&&subscriptionForm.controls['price'].touched)
+            {
+            <p class="error">Please enter valid values!</p>
+            }
+            <div class="control">
+                <label for="daysValid">Valid days</label>
+                <input type="text" id="daysValid" inputmode="numeric" formControlName="daysValid"><br>
+            </div>
+            @if
+            (subscriptionForm.controls['daysValid'].touched&&subscriptionForm.controls['daysValid'].dirty&&subscriptionForm.controls['daysValid'].invalid)
+            {
+            <p class="error">Please enter valid values!</p>
+            }
+            <div class="control">
+                <label for="description">Description</label>
+                <input type="text" id="description" formControlName="description"><br>
+            </div>
+            @if(subscriptionForm.controls['price'].errors?.['priceExist']&&subscriptionForm.controls['daysValid'].errors?.['ExistdaysValid']&&!updatePricingPlan()){
+            <p class="error">Plan Exist!</p>
+            }
+            @if(ERROR()!==''||subscriptionForm.controls['daysValid'].invalid){
+            <p class="error">{{ERROR()}}</p>
+            }
+            @if(ERROR()&&updatePricingPlan()){
+            <p class="error">{{ERROR()}}</p>
+            }
+            <div class="button-control">
+                <button type="button" (click)="triggerCancel()">Cancel</button>
+                @if (isEmptyObject(updatePricingPlan())) {
+                <button type="button" (click)="onAddSubscriptionPricingPlan()">Add Plan</button>
+                }
+                @if (!isEmptyObject(updatePricingPlan())) {
+                <button type="button" (click)="onUpdateSubscriptionPricingPlan()">Update Plan</button>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+}

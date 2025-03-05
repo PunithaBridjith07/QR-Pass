@@ -1,0 +1,14 @@
+<header appHeader></header>
+<div class="admin">
+    <div class="side-navbar">
+        <button type="button" routerLinkActive="selected" [routerLink]="['/admin','user-details']">User Details</button>
+        <button type="button" routerLinkActive="selected" [routerLink]="['/admin','event-list']">Event Details</button>
+        <button type="button" routerLinkActive="selected" [routerLink]="['/admin','pricing']">Pricing Details</button>
+        <button type="button" routerLinkActive="selected" [routerLink]="['/admin','offer']">offer Details</button>
+        <button type="button" routerLinkActive="selected">Payments</button>
+        <button type="button" routerLinkActive="selected">Notification</button>
+    </div>
+    <div class="admin-side-main-content">
+        <router-outlet />
+    </div>
+</div>

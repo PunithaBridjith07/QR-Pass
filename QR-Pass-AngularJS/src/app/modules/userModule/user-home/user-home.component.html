@@ -1,0 +1,31 @@
+<header appHeader></header>
+<div class="user">
+    <div class="upper-navbar">
+        <button type="button" routerLinkActive="selected" [routerLink]="['/',userId(),'all-event']">Events</button>
+        <button type="button" routerLinkActive="selected" [routerLink]="['/',userId(),'organize-events']">Organize
+            Events</button>
+        <button type="button" routerLinkActive="selected"
+            [routerLink]="['/',userId(),'subscription']">Subscription</button>
+        <button type="button" routerLinkActive="selected">Payments</button>
+        <button type="button" routerLinkActive="selected">Notification</button>
+    </div>
+    <div class="user-side-main-content">
+        <router-outlet />
+    </div>
+</div>
+
+<!-- <div class="user">
+    <div class="route-all-events">
+        <p>🎟️ Find exciting events near you! Book now and get your instant QR code ticket. Don't miss out—reserve
+            your spot today! 🚀</p>
+        <div class="trigger-button">
+            <p>🔍 Explore Events Now!</p><span>&#11177;</span><button type="button">Explore Events</button>
+        </div>
+    </div>
+    <div class="organize-event">
+        <p>📢 Host Your Event with Ease! 🎉 Set up, manage, and sell tickets effortlessly. Start now!</p>
+        <div class="trigger-button">
+            <p>🚀 Create Your Event Now!</p><span>&#11177;</span><button type="button">Organize Event</button>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,27 @@
+<div class="booking-container">
+    <h1>QR-Pass Ticket</h1>
+    <div class="booking-detail-division">
+        <img [src]="selectedEventDetail()?.data?.imageurl" [alt]="selectedEventDetail()?.data?.eventname">
+        <div class="booking-detail-content">
+            <div class="booking-bill">
+                <p>Event: <span>{{selectedEventDetail()?.data?.eventname}}</span></p>
+                <p>Seats: <span>{{seatNames().toString()|uppercase}}</span></p>
+                <p>Date: <span>{{selectedEventDetail()?.data?.date|date}}</span></p>
+                <p>Time: <span>{{selectedEventDetail()?.data?.time}}</span></p>
+                <p class="total-amount">Total Amount: <span>totalAmount</span>
+                    <span class="original-amount">original-amount</span> <span class="offer-percent">offerpercent</span>
+                </p>
+            </div>
+            <form>
+                <h1>Event Proof</h1>
+                <div class="control">
+                    <label for="aadhar">Aadhar Proof (User)</label>
+                    <input type="text" name="aadhar" id="aadhar" autofocus>
+                </div>
+                <div class="button-container">
+                    <button type="button" class="confirm-book">Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

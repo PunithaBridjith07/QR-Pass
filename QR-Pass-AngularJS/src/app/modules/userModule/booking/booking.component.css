@@ -1,0 +1,127 @@
+/* CSS for screen and max-width: 1440px */
+.booking-container {
+    padding: 20px;
+    width: 100%;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+.booking-container>h1 {
+    text-align: center;
+    font-size: 28px;
+    color: blueviolet;
+    margin-bottom: 15px;
+}
+
+.booking-detail-division {
+    margin: 0 auto;
+    display: flex;
+    width: 70%;
+    height: 90%;
+    background: #fff;
+    padding: 20px;
+    justify-content: space-evenly;
+    box-shadow: 0 0px 5px blueviolet;
+}
+
+.booking-detail-division img {
+    width: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-detail-content {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.booking-bill {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: whitesmoke;
+}
+
+.booking-bill p {
+    margin-top: 2px;
+    margin-left: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
+.booking-bill span {
+    font-weight: bold;
+    color: #333;
+}
+
+form {
+    height: 50%;
+    width: 100%;
+}
+
+form>h1 {
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    margin-left: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+}
+
+input {
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: blueviolet;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.confirm-book {
+    height: 40px;
+    width: 90px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    transition: all 0.3s ease;
+    background: blueviolet;
+    color: white;
+}
+
+.confirm-book:hover {
+    background: white;
+    color: blueviolet;
+    border: 1px solid blueviolet;
+}

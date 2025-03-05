@@ -1,0 +1,172 @@
+/* Organizer Event Section */
+.all-event-division {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Section Title */
+.section-title {
+    align-self: start;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1F2937;
+    margin-bottom: 20px;
+}
+
+/* Cards Container */
+.event-cards {
+    display: flex;
+    flex-direction: row;
+    width: 95vw;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: start;
+    list-style: none;
+    padding: 0;
+}
+
+/* Event Card */
+/* Tooltip Container */
+.event-card {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: row;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    border: 1px solid #E5E7EB;
+    align-items: center;
+    text-align: left;
+    padding: 16px;
+    gap: 20px;
+    cursor: pointer;
+}
+
+
+/* Fixed Image Size */
+.event-image {
+    width: 200px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Event Card Content */
+.event-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    position: relative;
+}
+
+/* Event Title */
+.event-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1F2937;
+    margin-bottom: 8px;
+}
+
+/* Event Info */
+.event-info {
+    color: #4B5563;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+/* Date & Time */
+.event-date-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #374151;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+/* Pricing & Seats */
+.event-pricing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.event-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2563EB;
+}
+
+.event-seats {
+    color: #4B5563;
+    font-size: 14px;
+}
+
+/* Offer Details */
+.event-offer {
+    padding: 8px;
+    background: #D1FAE5;
+    color: #047857;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-align: center;
+    width: 95%;
+}
+
+/* Event Description */
+.event-description {
+    color: #374151;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+/* Buttons */
+.event-button {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto; /* Pushes buttons to the bottom */
+}
+
+/* book Button */
+.book-button {
+    padding: 8px 16px;
+    background: darkred;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: none;
+}
+
+/* Show Pay Button on Hover */
+.event-card:hover .book-button {
+    display: block;
+}
+
+/* No Events Available Message */
+.not-found {
+    text-align: center;
+    font-size: 20px;
+    color: #ff4d4d;
+    background-color: #ffe6e6;
+    padding: 15px;
+    border-radius: 8px;
+    width: 60%;
+    margin: 30px auto;
+    font-weight: bold;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+

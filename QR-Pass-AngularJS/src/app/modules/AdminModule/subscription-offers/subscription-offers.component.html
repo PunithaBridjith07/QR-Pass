@@ -1,0 +1,92 @@
+<div class="Offer">
+    <h1>Offer Details</h1>
+    <button type="button" (click)="triggerFormVisible()">&#10010;</button>
+</div>
+@if (availableOffers.length>0) {
+<div class="offer-container">
+    <h2>Offers Available</h2>
+    <ul class="offer-cards">
+        @for (offer of availableOffers; track $index) {
+        <li class="offer-card">
+            <span>
+                <h1>{{offer.data.offercode}} - {{offer.data.offerpercent/100|percent:'1.0-0'}}</h1>
+            </span>
+            <div>
+                <h3>Applicable: {{offer.data.offerapplicable}}(Organized)</h3>
+            </div>
+            <p>{{offer.data.description}}</p>
+            <div class="offer-action-button">
+                <button type="button" (click)="onUpdateOfferDetails(offer._id)">Update</button>
+                <button type="button" (click)="onDeleteOffer(offer._id)">Delete</button>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+}
+@if (inActiveOffers.length>0) {
+<div class="offer-container">
+    <h2>In-Active Offers</h2>
+    <ul class="offer-cards">
+        @for (offer of inActiveOffers; track $index) {
+        <li class="offer-card">
+            <span>
+                <h1>{{offer.data.offercode}} - {{offer.data.offerpercent/100|percent:'1.0-0'}}</h1>
+            </span>
+            <div>
+                <h3>Applicable: {{offer.data.offerapplicable}}(Organized)</h3>
+            </div>
+            <p>{{offer.data.description}}</p>
+            <div class="offer-action-button">
+                <button type="button" (click)="onUpdateOfferDetails(offer._id)">Update</button>
+                <button type="button" (click)="onAddExistingSubscriptionOffer(offer._id)">Add</button>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+}
+@if (isFormVisible()) {
+<div class="organizeOfferForm-overlay">
+    <div class="organizeOfferForm-content">
+        <button class="organizeOfferForm-close" (click)="triggerCancel()">✖</button>
+        <form [formGroup]="subscriptionOffersForm">
+            <div class="control">
+                <label for="offerPercent">Offer Percentage</label>
+                <input type="text" id="offerPercent" inputmode="numeric" formControlName="offerPercent"><br>
+            </div>
+            @if
+            (subscriptionOffersForm.controls['offerPercent'].dirty&&subscriptionOffersForm.controls['offerPercent'].invalid)
+            {
+            <p class="error">Please fill Offer Percentage Valid!</p>
+            }
+            <div class="control">
+                <label for="offerApplicable">Offer Applicable</label>
+                <input type="text" id="offerApplicable" inputmode="numeric" formControlName="offerApplicable"><br>
+            </div>
+            @if (subscriptionOffersForm.controls['offerApplicable'].errors?.['OfferApplicableExist']) {
+            <p class="error">Offer Applicable Exist!</p>
+            }
+            <div class="control">
+                <label for="description">Description</label>
+                <input type="text" id="description" formControlName="description"><br>
+            </div>
+            @if (subscriptionOffersForm.controls['description'].errors?.['descriptionExist']) {
+            <p class="error">Please provide valid description!</p>
+            }
+            @if(ERROR()&&updateOffer()){
+            <p class="error">{{ERROR()}}</p>
+            }
+            <div class="button-control">
+                <button type="button" (click)="triggerCancel()">Cancel</button>
+                @if (isEmptyObject(updateOffer())) {
+                <button type="button" (click)="onAddOffer()">Add Plan</button>
+                }
+                @if (!isEmptyObject(updateOffer())) {
+                <button type="button" (click)="onUpdateOffer()">Update Plan</button>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+}

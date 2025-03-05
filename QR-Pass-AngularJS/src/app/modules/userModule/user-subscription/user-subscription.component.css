@@ -1,0 +1,526 @@
+/* Max Width: 2560px (Large Screens) */
+@media screen and (max-width: 2560px) {
+    .subscription-container {
+        height: auto;
+        width: 80%;
+        margin: 50px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 20px;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .subscription-container h2 {
+        font-size: 50px;
+        text-align: center;
+        color: blueviolet;
+        font-family: "Josefin Sans", serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+    .subscription-container p {
+        font-size: 20px;
+        text-align: center;
+        font-weight: 400;
+        color: #444;
+        font-family: "Josefin Sans", serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+    }
+
+    .subscription-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 0;
+        list-style: none;
+    }
+
+    .subscription-list li {
+        background-color: white;
+        width: 200px;
+        height: 250px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        filter: drop-shadow(0 0 5px lightgrey);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .subscription-list li:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Text Styling */
+    .subscription-list p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #555;
+        margin: 5px 0;
+    }
+
+    .subscription-list strong {
+        color: #333;
+    }
+
+    /* Button Styling */
+    .subscription-list button {
+        height: 40px;
+        width: 130px;
+        font-size: 15px;
+        font-family: "Anton", sans-serif;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: blueviolet;
+        color: white;
+        border-radius: 5px;
+        display: block;
+        margin: auto;
+    }
+
+    .subscription-list button:hover {
+        background-color: transparent;
+        border: 2px solid blueviolet;
+        color: blueviolet;
+    }
+}
+
+/* Max Width: 1440px (Standard Desktop) */
+@media screen and (max-width: 1440px) {
+    .subscription-container {
+        width: 70%;
+        padding: 40px;
+    }
+
+    .subscription-container h2 {
+        font-size: 55px;
+    }
+
+    .subscription-container p {
+        font-size: 22px;
+    }
+
+    .subscription-list li {
+        width: 220px;
+        height: 280px;
+    }
+
+    .subscription-list button {
+        height: 45px;
+        width: 140px;
+        font-size: 16px;
+    }
+
+    .subscribeForm-overlay {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        z-index: 1000;
+
+        & h2 {
+            text-align: center;
+            color: blueviolet;
+        }
+    }
+
+    .subscribeForm-content {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        width: 60%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .subscribeForm-content form {
+        width: 45%;
+    }
+
+    .subscribeForm-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .subscribeForm-content .control {
+        margin-bottom: 15px;
+    }
+
+    .subscribeForm-content label {
+        font-weight: bold;
+    }
+
+    .subscribeForm-content input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .payment-content {
+        text-align: center;
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .total-amount {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .offer-applied {
+        font-size: 1rem;
+        color: #007bff;
+        font-weight: 600;
+    }
+
+    .offer-code {
+        background: #ffcc00;
+        color: #333;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    .original-amount {
+        font-size: 1.2rem;
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    .button-group {
+        margin-top: 15px;
+    }
+
+    .button-group button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .cancel-subscribe {
+        background: #f44336;
+        color: white;
+        margin-right: 10px;
+    }
+
+    .pay {
+        background: #28a745;
+        color: white;
+    }
+
+    .button-group button:hover {
+        opacity: 0.8;
+    }
+
+
+    /* Offer Cards Section */
+    .offer-cards {
+        width: 45%;
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        max-height: 80%;
+    }
+
+    .offer-cards ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .offer-cards li {
+        background-color: #f9f9f9;
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .active-offer {
+        background-color: rgb(156, 91, 216) !important;
+        color: white;
+        border-color: rgb(112, 50, 180);
+    }
+
+    .offer-cards li h1 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .offer-cards li p {
+        margin-top: 10px;
+    }
+
+    .no-offers {
+        font-size: 1.2rem;
+        color: #888;
+        padding: 10px;
+        background: #f1f1f1;
+        border-radius: 8px;
+    }
+
+    /* Payment */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        transition: opacity 1s ease-out;
+    }
+
+    .container {
+        text-align: center;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .checkmark {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #4CAF50;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 20px;
+    }
+
+    .checkmark::after {
+        content: '\2713';
+        font-size: 50px;
+        color: white;
+        animation: pop 0.4s ease-out;
+    }
+
+    @keyframes pop {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #666;
+        font-size: 16px;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+        .subscribeForm-content {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .offer-cards,
+        form {
+            width: 100%;
+        }
+    }
+
+
+}
+
+/* Max Width: 1024px (Tablets & Small Laptops) */
+@media screen and (max-width: 1024px) {
+    .subscription-container {
+        width: 80%;
+        padding: 35px;
+    }
+
+    .subscription-container h2 {
+        font-size: 50px;
+    }
+
+    .subscription-container p {
+        font-size: 20px;
+    }
+
+    .subscription-list {
+        gap: 15px;
+    }
+
+    .subscription-list li {
+        width: 200px;
+        height: 260px;
+    }
+
+    .subscription-list button {
+        height: 40px;
+        width: 130px;
+        font-size: 15px;
+    }
+}
+
+/* Max Width: 768px (Small Tablets) */
+@media screen and (max-width: 768px) {
+    .subscription-container {
+        width: 85%;
+        padding: 30px;
+    }
+
+    .subscription-container h2 {
+        font-size: 45px;
+    }
+
+    .subscription-container p {
+        font-size: 18px;
+    }
+
+    .subscription-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .subscription-list li {
+        width: 250px;
+        height: 280px;
+    }
+
+    .subscription-list button {
+        height: 40px;
+        width: 130px;
+        font-size: 14px;
+    }
+}
+
+/* Max Width: 425px (Mobile - Large) */
+@media screen and (max-width: 425px) {
+    .subscription-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .subscription-container h2 {
+        font-size: 40px;
+    }
+
+    .subscription-container p {
+        font-size: 16px;
+    }
+
+    .subscription-list li {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .subscription-list button {
+        height: 38px;
+        width: 120px;
+        font-size: 14px;
+    }
+}
+
+/* Max Width: 375px (Mobile - Medium) */
+@media screen and (max-width: 375px) {
+    .subscription-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .subscription-container h2 {
+        font-size: 35px;
+    }
+
+    .subscription-container p {
+        font-size: 14px;
+    }
+
+    .subscription-list li {
+        width: 95%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .subscription-list button {
+        height: 36px;
+        width: 110px;
+        font-size: 13px;
+    }
+}
+
+/* Max Width: 320px (Smallest Phones) */
+@media screen and (max-width: 320px) {
+    .subscription-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .subscription-container h2 {
+        font-size: 30px;
+    }
+
+    .subscription-container p {
+        font-size: 12px;
+    }
+
+    .subscription-list li {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .subscription-list button {
+        height: 34px;
+        width: 100px;
+        font-size: 12px;
+    }
+}

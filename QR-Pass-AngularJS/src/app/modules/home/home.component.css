@@ -1,0 +1,163 @@
+
+.initial-register {
+    height: 500px;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.initial-register p {
+    color: blueviolet;
+    font-family: "Anton", serif;
+    font-optical-sizing: auto;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+.initial-register button {
+    height: 50px;
+    width: 100px;
+    align-self: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: "Anton", serif;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    color: white;
+}
+
+.initial-register button:hover {
+    background-color: transparent;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
+
+hr {
+    width: 85vw;
+    margin: 0 auto;
+}
+
+.decor-up {
+    height: 200px;
+    width: 60vw;
+    transform: rotate(180deg);
+    margin: 0 20vw;
+}
+
+.slider-wrapper {
+    height: 500px;
+    width: 80vw;
+    margin: 30px auto;
+    overflow: hidden;
+    filter: drop-shadow(0 0 3px black);
+}
+
+.slider {
+    position: relative;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    animation: 20s slider infinite alternate;
+}
+
+.slider img {
+    float: left;
+    width: 20%;
+}
+
+.explore-the-process h1 {
+    font-size: 60px;
+    text-align: center;
+}
+
+.explore-the-process {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100vw;
+    height: 700px;
+    background-color: lightblue;
+}
+
+.user-process {
+    width: 80%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: center;
+}
+
+.user-process P {
+    text-align: center;
+    font-size: 20px;
+}
+
+.user-process h3 {
+    text-align: center;
+    font-size: 30px;
+}
+
+.user-process ul {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 10%;
+}
+
+.user-process ul>li {
+    list-style-type: none;
+    text-align: justify;
+    font-size: 20px;
+    letter-spacing: 1px;
+
+    & strong:hover {
+        color: blueviolet;
+    }
+}
+
+@keyframes slider {
+    0% {
+        left: 0%;
+    }
+
+    20% {
+        left: 0%;
+    }
+
+    25% {
+        left: -100%;
+    }
+
+    45% {
+        left: -100%;
+    }
+
+    50% {
+        left: -200%;
+    }
+
+    70% {
+        left: -200%;
+    }
+
+    75% {
+        left: -300%;
+    }
+
+    95% {
+        left: -300%;
+    }
+
+    100% {
+        left: -400%;
+    }
+}

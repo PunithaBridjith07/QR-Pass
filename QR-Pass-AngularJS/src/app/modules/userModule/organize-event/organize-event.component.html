@@ -1,0 +1,202 @@
+<div class="organize-events">
+    <h1>Organize Events</h1>
+    @if (isSubscribed()) {
+    <button type="button" (click)="triggerFormVisible()">&#10010;</button>
+    }
+    @if (!isSubscribed()) {
+    <button type="button" style="font-size: medium;" [routerLink]="['/',userId(),'subscription']">Subscribe Now</button>
+    }
+</div>
+<div class="organizer-event-division">
+    <h1 class="section-title">Your Organized Events</h1>
+    <ul class="event-cards">
+        @if(organizedEvents().length>0){
+        @for(event of organizedEvents();track $index){
+        <li class="event-card">
+            <img [src]="event.data.imageurl" [alt]="event.data.eventname" class="event-image">
+            <h2 class="event-title">{{event.data.eventname|titlecase }}</h2>
+            <p class="event-info"><strong>Artist:</strong> {{event.data.artist}}</p>
+            <p class="event-info"><strong>Venue:</strong> {{event.data.venue}}, {{event.data.district}},
+                {{event.data.state}}</p>
+            <div class="event-date-time">
+                <p><strong>📅 Date:</strong> {{event.data.date|date:'dd-MM-yyyy'}}</p>
+                <p><strong>⏰ Time:</strong> {{event.data.time}}</p>
+            </div>
+            <div class="event-pricing">
+                <p class="event-price">{{event.data.price|currency:'INR'}}</p>
+                <span class="event-seats">{{event.data.seats}} seats available</span>
+            </div>
+            @if(!isSubscribed()){
+            <div class="subscription-status">
+                <p class="expired-subscription">⚠️ Subscription Expired</p>
+            </div>
+            }
+            @if(event.data.offerpercent>0){
+            <div class="event-offer">
+                🎉 Offer: {{event.data.offerpercent/100|percent}} off!
+            </div>
+            }
+            <p class="event-description">{{event.data.description}}</p>
+            <div class="event-buttons">
+                @if(isSubscribed()){
+                <button class="update-button" (click)="triggerUpdate(event._id)">🔄 Update</button>
+                }
+                @if(!isSubscribed()){
+                <button class="subscribe-button" [routerLink]="['/',userId(),'subscription']">💳 Subscribe</button>
+                }
+            </div>
+        </li>
+        }
+        }@else{
+        <h3 class="not-found">No organized events available at the moment.</h3>
+        }
+    </ul>
+</div>
+@if (isFormVisible()) {
+<div class="organizeEventForm-overlay">
+    <div class="organizeEventForm-content">
+        <button class="organizeEventForm-close" (click)="triggerCancel()">✖</button>
+        <form [formGroup]="eventForm">
+            <div class="control">
+                <label for="images">Upload Venue Image</label>
+                <input type="file" name="images" id="images" (change)="onFileSelected($event)">
+                @if(eventForm.controls['image'].errors?.['venueChanged']){
+                <p class="error">Venue changed, image is required.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="eventName">Event Name</label>
+                <input type="text" id="eventName" placeholder="Enter event name" formControlName="eventName">
+                @if(eventForm.controls['eventName'].touched && eventForm.controls['eventName'].dirty &&
+                eventForm.controls['eventName'].invalid) {
+                <p class="error">Event name is required.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="artist">Artist</label>
+                <input type="text" id="artist" placeholder="Enter artist name" formControlName="artist">
+                @if(eventForm.controls['artist'].touched && eventForm.controls['artist'].dirty &&
+                eventForm.controls['artist'].errors?.['artistNotAvail']) {
+                <p class="error">Please specify the artist performing at the event.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="seats">Seats</label>
+                <input type="text" inputmode="numeric" name="seats" id="seats" placeholder="Available seats"
+                    formControlName="seats">
+                @if(eventForm.controls['seats'].touched && eventForm.controls['seats'].dirty &&
+                eventForm.controls['seats'].invalid) {
+                <p class="error">Please specify the number of seats available.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="price">Price</label>
+                <input type="text" inputmode="numeric" name="price" id="price" placeholder="Price per seat"
+                    formControlName="price">
+                @if(eventForm.controls['price'].touched && eventForm.controls['price'].dirty &&
+                eventForm.controls['price'].invalid) {
+                <p class="error">Please enter a valid price per seat.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="offerApplicable">Offer Applicable</label>
+                <input type="text" id="offerApplicable" inputmode="numeric"
+                    [value]="eventForm.value.offerApplicable < '1' ? '0' : eventForm.value.offerApplicable"
+                    formControlName="offerApplicable">
+                @if (eventForm.get('offerApplicable')?.touched&&eventForm.get('offerApplicable')?.invalid) {
+                <p class="error">Offer Applicable field has been touched. Enter 0 if not required.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="offerPercent">Offer Percent</label>
+                <input type="text" id="offerPercent" inputmode="numeric" formControlName="offerPercent">
+                @if (eventForm.get('offerPercent')?.touched&&eventForm.get('offerPercent')?.invalid) {
+                <p class="error">Offer Percent can't '0',while offer applicable greater than 0.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="date">Date</label>
+                <input type="date" name="date" [min]="currentDate()" id="date" placeholder="Select event date"
+                    formControlName="date" onkeydown="return false;">
+                @if(eventForm.controls['date'].touched&&
+                eventForm.controls['date'].invalid) {
+                <p class="error">Please select a valid event date.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="time">Time</label>
+                <input type="time" name="time" id="time" placeholder="Event time" formControlName="time"
+                    onkeydown="return false;">
+                @if(eventForm.controls['time'].touched&&
+                eventForm.controls['time'].invalid) {
+                <p class="error">Please specify the event time.</p>
+                }
+                @if(eventForm.controls['time'].errors?.['artistNotAvail']&&isEmptyObject(editEvent())){
+                <p class="error">Artist is unavailable for this time slot.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="venue">Venue</label>
+                <input type="text" name="venue" id="venue" placeholder="Event venue" formControlName="venue">
+                @if(eventForm.controls['venue'].touched && eventForm.controls['venue'].dirty &&
+                eventForm.controls['venue'].invalid) {
+                <p class="error">Please provide the event venue details.</p>
+                }
+                @if(eventForm.controls['venue'].errors?.['venueNotAvail']&&isEmptyObject(editEvent())){
+                <p class="error">The selected venue is unavailable. Please provide an exact address to avoid conflicts.
+                </p>
+                }
+            </div>
+            <div class="control">
+                <label for="state">State</label>
+                <select name="state" id="state" formControlName="state">
+                    @for (state of states(); track $index) {
+                    <option [value]="state">{{state}}</option>
+                    }
+                </select>
+            </div>
+            <div class="control">
+                <label for="district">District</label>
+                <select name="district" id="district" formControlName="district">
+                    @for (district of districts()[eventForm.get('state')?.value]; track $index) {
+                    <option [value]="district">{{district}}</option>
+                    }
+                </select>
+                @if(eventForm.controls['district'].touched&&
+                eventForm.controls['district'].invalid) {
+                <p class="error">Please select the district for the event.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="location">Location URL</label>
+                <input type="text" name="location" id="location" placeholder="Enter map location"
+                    formControlName="locationViaMap">
+                @if(eventForm.controls['locationViaMap'].touched && eventForm.controls['locationViaMap'].dirty &&
+                eventForm.controls['locationViaMap'].invalid) {
+                <p class="error">Please provide a valid location link.</p>
+                }
+            </div>
+            <div class="control">
+                <label for="description">Description</label>
+                <textarea id="description" formControlName="description"></textarea>
+                @if(eventForm.controls['description'].touched && eventForm.controls['description'].dirty &&
+                eventForm.controls['description'].invalid) {
+                <p class="error">Please provide a brief and engaging event description.</p>
+                }
+            </div>
+            @if(ERROR() && editEvent()) {
+            <p class="error">{{ ERROR() }}</p>
+            }
+            <div class="button-control">
+                <button type="button" (click)="triggerCancel()">Cancel</button>
+                @if (isEmptyObject(editEvent())) {
+                <button type="button" (click)="onCreateEvent()">Add Event</button>
+                }
+                @if (!isEmptyObject(editEvent())) {
+                <button type="button" (click)="onUpdateOrganizedEvent()">Update Event</button>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+}

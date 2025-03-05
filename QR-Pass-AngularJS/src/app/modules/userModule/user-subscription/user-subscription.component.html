@@ -1,0 +1,101 @@
+<div class="subscription-container">
+    <h2>Subscription Plan</h2>
+    <p>
+        🎟️ Our Subscription Plan is designed to offer event organizers flexibility
+        and affordability. By subscribing, you gain the ability to publish and
+        manage events for a specific duration. ⏳ The subscription is valid for a
+        set number of days, and during this period, you can create and list events
+        seamlessly. ✅ Once the validity expires, event publishing will be
+        restricted unless you renew the plan. 🔄
+    </p>
+    <br />
+    <p>
+        ✨ This plan ensures that organizers can effectively plan and execute events
+        without interruptions while providing audiences with access to
+        well-organized listings. 📅🎊
+    </p>
+    <ul class="subscription-list">
+        @for (plan of subscriptionPlans(); track $index) {
+        <li>
+            <p><strong>Price:</strong> ₹{{ plan.data.price }}</p>
+            <p><strong>Valid for:</strong>{{ plan.data.daysvalid }} days</p>
+            <p><strong>Description:</strong>{{ plan.data.description }}</p>
+            <button [disabled]="isSubscribed()" (click)="onSelectSubscriptionPlan(plan._id)">Subscribe Now</button>
+        </li>
+        }
+    </ul>
+</div>
+@if (isFormVisible()) {
+<div class="subscribeForm-overlay">
+    <div class="subscribeForm-content">
+        <form [formGroup]="subscribeForm">
+            <h2>Subscribe</h2>
+            <div class="control">
+                <label for="price">Subscription Cost</label>
+                <input type="text" id="price" inputmode="numeric" formControlName="price" /><br />
+            </div>
+            <div class="control">
+                <label for="daysValid">Days Valid</label>
+                <input type="text" id="daysValid" inputmode="numeric" formControlName="daysValid" /><br />
+            </div>
+            <div class="control">
+                <label for="description">Description</label>
+                <input type="text" id="description" formControlName="description" /><br />
+            </div>
+            <div class="control">
+                <label for="startDate">Start At</label>
+                <input type="text" id="startDate" formControlName="startDate"><br>
+            </div>
+            <div class="control">
+                <label for="endDate">End At</label>
+                <input type="text" id="endDate" formControlName="endDate">
+            </div>
+
+            <div class="payment-content">
+                @if (selectedSubscriptionOffer() !== null) {
+                <p class="offer-applied">
+                    <span class="offer-code">{{ selectedSubscriptionOffer()?.data?.offercode }}</span> - Applied
+                </p>
+                <p class="original-amount">₹{{ originalAmount() }}</p>
+                }
+                <p class="total-amount">
+                    Total Amount: <strong>₹{{ totalAmount() }}</strong>
+                </p>
+                <div class="button-group">
+                    <button class="cancel-subscribe" (click)="triggerCancel()">Cancel</button>
+                    <button type="button" class="pay" (click)="onPaySubscription()">Pay</button>
+                </div>
+            </div>
+
+        </form>
+        <div class="offer-cards">
+            <h2>Offers</h2>
+            <ul>
+                @if (applicableOffers.length>0) {
+                @for (offer of applicableOffers; track $index) {<li
+                    [ngClass]="{ 'active-offer': selectedSubscriptionOffer()?._id === offer._id }"
+                    (click)="onSelectSubscriptionOffer(offer._id)"
+                    (keydown.enter)="onSelectSubscriptionOffer(offer._id)">
+                    <span>
+                        <h1>{{ offer.data.offercode }} - {{ offer.data.offerpercent / 100 | percent:'1.0-0' }}</h1>
+                    </span>
+                    <p>{{ offer.data.description }}</p>
+                </li>
+                }
+                }@else {
+                <p class="no-offers">Offers Not Available!</p>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+}
+@if (isPaid()) {
+<div class="overlay">
+    <div class="container">
+        <div class="checkmark"></div>
+        <h1>Payment Successful</h1>
+        <p>Your transaction was completed successfully.</p>
+    </div>
+</div>
+}

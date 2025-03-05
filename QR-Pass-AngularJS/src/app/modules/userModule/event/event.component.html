@@ -1,0 +1,83 @@
+<div class="event-container">
+    <div class="event">
+        <button class="event-go-back" (click)="onNavigateAllEvent()">&#11207;</button>
+        <div class="event-content">
+            <img [src]="event()?.data?.imageurl" [alt]="event()?.data?.eventname" class="event-image">
+            <div class="event-detail">
+                <h2 class="event-title">{{event()?.data?.eventname|titlecase}}</h2>
+                <p class="event-info"><strong>Artist:</strong> {{event()?.data?.artist}}</p>
+                <p class="event-info"><strong>Venue:</strong> {{event()?.data?.venue}},
+                    {{event()?.data?.district}},
+                    {{event()?.data?.state}}</p>
+                <div class="event-pricing">
+                    <p class="event-price">{{event()?.data?.price|currency:'INR'}}</p>
+                </div>
+                <div class="event-date-time">
+                    <span class="event-seats"><strong style="font-size: 30px;">{{event()?.data?.seats}}</strong>
+                        seats
+                        available</span>
+                    <p><strong>📅 Date:</strong> {{event()?.data?.date|date:'dd-MM-yyyy'}}</p>
+                    <p><strong>⏰ Time:</strong>
+                        @if (event()?.data?.time) {
+                        {{ ('1970-01-01T' + event()?.data?.time + ':00') | date: 'h:mm a' }}
+                        } @else {
+                        N/A
+                        }</p>
+                </div>
+                @if ((event()?.data?.offerpercent??0)>0) {
+                <div class="event-offer">
+                    🎉 Offer: {{event()?.data?.offerpercent|percent}} off!
+                </div>
+                }
+                <button class="book-button" (click)="onShowSeatSelection()">🎟️ Book Now</button>
+            </div>
+        </div>
+        <h4>About Event</h4>
+        <p class="event-description">{{event()?.data?.description}}
+        </p>
+    </div>
+</div>
+
+
+@if (isSeatSelectionOpen()) {
+<div class="seat-selection-overlay">
+    <div class="seat-selection-division">
+        <button type="button" class="cross-button" (click)="triggerCancel()">✖</button>
+        <h1>Select Seats</h1><br>
+        <div class="seat-status">
+            <span>
+                <input type="checkbox" name="seat" id="available-seat" class="available" disabled> Available
+            </span>
+            <span>
+                <input type="checkbox" name="seat" id="selected-seat" class="selected" disabled checked> Selected
+            </span>
+            <span>
+                <input type="checkbox" name="seat" id="sold-seat" class="sold" disabled> Sold
+            </span>
+        </div>
+        <div class="seat-container">
+            <h5>Screen</h5>
+            <hr>
+            <div class="seats">
+                @for (seat of manageSeats(); track $index) {
+                <label class="custom-checkbox" [ngClass]="{
+                      'available': !selectedSeats().includes(seat),
+                      'selected': selectedSeats().includes(seat),
+                      'sold': eventSeat()?.data?.seats?.[seat] === 'sold'
+                    }">
+                    <input type="checkbox" name="seat" [id]="'seat-'+seat" (click)="onSelectSeat(seat)"
+                        (keydown.enter)="onSelectSeat(seat)" [disabled]="eventSeat()?.data?.seats?.[seat] === 'sold'">
+                    @if (selectedSeats().includes(seat)||eventSeat()?.data?.seats?.[seat] === 'sold') {
+                    <div class="seat-box">{{ seat|uppercase}}</div> <!-- ✅ Seat name inside styled checkbox -->
+                    }
+                </label>
+                }
+            </div>
+
+        </div>
+        @if (selectedSeats().length>0) {
+        <button type="button" class="next-button" (click)="onHandleSeatSelection()">Next</button>
+        }
+    </div>
+</div>
+}

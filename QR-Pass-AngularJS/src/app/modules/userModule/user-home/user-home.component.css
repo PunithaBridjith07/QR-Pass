@@ -1,0 +1,95 @@
+@media screen and (max-width:1440px) {
+    :host{
+        overflow: hidden;
+    }
+    .user {
+        height: 85vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .upper-navbar {
+        /* position: fixed;
+        margin-top: 0; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        height: 10vh;
+        width: 100vw;
+        background-color: white;
+        filter: drop-shadow(0 0 3px lightgrey);
+        z-index: 998;
+    }
+
+    .upper-navbar button {
+        font-family: "Anton", serif;
+        font-size: 18px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        color: blueviolet;
+    }
+
+    .upper-navbar button:hover,
+    .upper-navbar .selected {
+        color: blueviolet;
+        background-color: rgb(228, 222, 222);
+        border-radius: 5px;
+    }
+
+    .user-side-main-content {
+        height: 75vh;
+        width: 100vw;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+/* 
+@media screen and (max-width: 2560px) {
+    .user {
+        height: 90vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .upper-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        height: 8vh;
+        width: 100vw;
+        background-color: white;
+        filter: drop-shadow(0 0 4px lightgrey);
+    }
+
+    .upper-navbar button {
+        font-family: "Anton", serif;
+        font-size: 22px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 12px 20px;
+        color: blueviolet;
+    }
+
+    .upper-navbar button:hover,
+    .upper-navbar .selected {
+        color: blueviolet;
+        background-color: rgb(220, 215, 215);
+        border-radius: 8px;
+    }
+
+    .user-side-main-content {
+        height: 82vh;
+        width: 100vw;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+ */

@@ -1,0 +1,194 @@
+:host {
+    height: 85vh;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.Offer {
+    background-color: white;
+    filter: drop-shadow(0 0 5px lightgrey);
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: "Anton", serif;
+    overflow-y: auto;
+}
+
+.Offer h1 {
+    font-size: 40px;
+    margin: auto auto;
+    text-align: center;
+}
+
+.Offer button {
+    margin: auto 50px;
+    height: 50%;
+    width: 10%;
+    font-size: 30px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: blueviolet;
+    color: white;
+}
+
+.Offer button:hover {
+    background-color: transparent;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
+
+.offer-container {
+    width: 80vw;
+    height: auto;
+    padding: 0;
+}
+
+.offer-container h2 {
+    margin: 20px 0 20px 20px;
+    font-size: 30px;
+}
+
+.offer-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.offer-card {
+    list-style-type: none;
+    height: 250px;
+    width: 200px;
+    background-color: white;
+    filter: drop-shadow(0 0 5px lightgrey);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: scale(1.05);
+}
+
+.offer-card h1 {
+    font-size: 24px;
+    color: blueviolet;
+}
+
+.offer-card h3 {
+    font-size: 18px;
+    color: grey;
+}
+
+.offer-card p {
+    font-size: 16px;
+    color: grey;
+}
+
+.offer-action-button {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.offer-action-button button {
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.offer-action-button button:hover {
+    background-color: transparent;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
+
+.organizeOfferForm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.organizeOfferForm-content {
+    background: white;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.organizeOfferForm-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.control input {
+    padding: 8px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.button-control {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.button-control button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.button-control button:first-child {
+    background: grey;
+    color: white;
+}
+
+.button-control button:last-child {
+    background: blueviolet;
+    color: white;
+}
+
+.button-control button:last-child:hover {
+    background: transparent;
+    border: 1.5px solid blueviolet;
+    color: blueviolet;
+}
