@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal } from '@angular/core';
-import { isExistDaysValid, isExistPlanPrice, SubscriptionPlan } from '../../AdminModule/subscription-plan/subscription-plan.model';
+import { isExistDaysValid, isExistPlanPrice, SubscriptionPayment, SubscriptionPlan } from '../../AdminModule/subscription-plan/subscription-plan.model';
 import { SubscriptionOffer } from '../../AdminModule/subscription-offers/subscription-offers.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -130,15 +130,14 @@ export class UserSubscriptionComponent {
     });
 
     //  Published Payment Structure
-    const paymentData = {
+    const paymentData: SubscriptionPayment = {
       _id: `payment_2_${uuidv4()}`,
       data: {
         user: this.userId().split('_2_')[1],
         subscribeddetail: subscribedData._id.split('_2_')[1],
         paid: this.totalAmount(),
-        date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
-        time: date.toTimeString().split(" ")[0],
-        type: "publishedpayment"
+        datetime: date.toISOString(),
+        type: "subscriptionpayment"
       }
     };
 
@@ -149,9 +148,12 @@ export class UserSubscriptionComponent {
           next: (response: any) => {
             const existUserData = response.rows[0]?.value;
             if (!existUserData) return;
+            const emaildate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+            const time = date.toTimeString().split(" ")[0]
+
 
             //  Email Payment Details
-            const emailData = { to: existUserData.data.email, paid: paymentData.data.paid, date: paymentData.data.date, time: paymentData.data.time }
+            const emailData = { to: existUserData.data.email, paid: paymentData.data.paid, date: emaildate, time: time }
             this.subscription = this.dbService.onPaySubscription(emailData).subscribe({
               next: (response: any) => console.log(response.message),
             });

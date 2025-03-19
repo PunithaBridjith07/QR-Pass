@@ -20,7 +20,7 @@
                 {{event.data.state}}</p>
             <div class="event-date-time">
                 <p><strong>📅 Date:</strong> {{event.data.date|date:'dd-MM-yyyy'}}</p>
-                <p><strong>⏰ Time:</strong> {{event.data.time}}</p>
+                <p><strong>⏰ Time:</strong> {{event.data.time|date:'h:mm a'}}</p>
             </div>
             <div class="event-pricing">
                 <p class="event-price">{{event.data.price|currency:'INR'}}</p>
@@ -41,6 +41,10 @@
                 @if(isSubscribed()){
                 <button class="update-button" (click)="triggerUpdate(event._id)">🔄 Update</button>
                 }
+                <!-- @if (event.data.time) { -->
+                <button class="scan-button" [routerLink]="['/',userId(),'entry',event._id.split('_2_')[1]]">Authenticate
+                    Check-in</button>
+                <!-- } -->
                 @if(!isSubscribed()){
                 <button class="subscribe-button" [routerLink]="['/',userId(),'subscription']">💳 Subscribe</button>
                 }
@@ -67,16 +71,15 @@
             <div class="control">
                 <label for="eventName">Event Name</label>
                 <input type="text" id="eventName" placeholder="Enter event name" formControlName="eventName">
-                @if(eventForm.controls['eventName'].touched && eventForm.controls['eventName'].dirty &&
-                eventForm.controls['eventName'].invalid) {
+                @if(eventForm.controls['eventName'].touched&&eventForm.controls['eventName'].invalid) {
                 <p class="error">Event name is required.</p>
                 }
             </div>
             <div class="control">
                 <label for="artist">Artist</label>
                 <input type="text" id="artist" placeholder="Enter artist name" formControlName="artist">
-                @if(eventForm.controls['artist'].touched && eventForm.controls['artist'].dirty &&
-                eventForm.controls['artist'].errors?.['artistNotAvail']) {
+                @if(eventForm.controls['artist'].touched &&
+                eventForm.controls['artist'].errors?.['required']) {
                 <p class="error">Please specify the artist performing at the event.</p>
                 }
             </div>
@@ -84,8 +87,7 @@
                 <label for="seats">Seats</label>
                 <input type="text" inputmode="numeric" name="seats" id="seats" placeholder="Available seats"
                     formControlName="seats">
-                @if(eventForm.controls['seats'].touched && eventForm.controls['seats'].dirty &&
-                eventForm.controls['seats'].invalid) {
+                @if(eventForm.controls['seats'].touched&&eventForm.controls['seats'].invalid) {
                 <p class="error">Please specify the number of seats available.</p>
                 }
             </div>
@@ -93,8 +95,7 @@
                 <label for="price">Price</label>
                 <input type="text" inputmode="numeric" name="price" id="price" placeholder="Price per seat"
                     formControlName="price">
-                @if(eventForm.controls['price'].touched && eventForm.controls['price'].dirty &&
-                eventForm.controls['price'].invalid) {
+                @if(eventForm.controls['price'].touched&&eventForm.controls['price'].invalid) {
                 <p class="error">Please enter a valid price per seat.</p>
                 }
             </div>
@@ -128,7 +129,7 @@
                 <input type="time" name="time" id="time" placeholder="Event time" formControlName="time"
                     onkeydown="return false;">
                 @if(eventForm.controls['time'].touched&&
-                eventForm.controls['time'].invalid) {
+                eventForm.controls['time'].errors?.['required']) {
                 <p class="error">Please specify the event time.</p>
                 }
                 @if(eventForm.controls['time'].errors?.['artistNotAvail']&&isEmptyObject(editEvent())){
@@ -138,8 +139,7 @@
             <div class="control">
                 <label for="venue">Venue</label>
                 <input type="text" name="venue" id="venue" placeholder="Event venue" formControlName="venue">
-                @if(eventForm.controls['venue'].touched && eventForm.controls['venue'].dirty &&
-                eventForm.controls['venue'].invalid) {
+                @if(eventForm.controls['venue'].touched&&eventForm.controls['venue'].errors?.['required']) {
                 <p class="error">Please provide the event venue details.</p>
                 }
                 @if(eventForm.controls['venue'].errors?.['venueNotAvail']&&isEmptyObject(editEvent())){
@@ -155,6 +155,10 @@
                     }
                 </select>
             </div>
+            @if(eventForm.controls['state'].touched&&
+            eventForm.controls['state'].invalid) {
+            <p class="error">Please select the state for the event.</p>
+            }
             <div class="control">
                 <label for="district">District</label>
                 <select name="district" id="district" formControlName="district">
@@ -171,16 +175,14 @@
                 <label for="location">Location URL</label>
                 <input type="text" name="location" id="location" placeholder="Enter map location"
                     formControlName="locationViaMap">
-                @if(eventForm.controls['locationViaMap'].touched && eventForm.controls['locationViaMap'].dirty &&
-                eventForm.controls['locationViaMap'].invalid) {
+                @if(eventForm.controls['locationViaMap'].touched&&eventForm.controls['locationViaMap'].invalid) {
                 <p class="error">Please provide a valid location link.</p>
                 }
             </div>
             <div class="control">
                 <label for="description">Description</label>
                 <textarea id="description" formControlName="description"></textarea>
-                @if(eventForm.controls['description'].touched && eventForm.controls['description'].dirty &&
-                eventForm.controls['description'].invalid) {
+                @if(eventForm.controls['description'].touched&&eventForm.controls['description'].errors?.['required']) {
                 <p class="error">Please provide a brief and engaging event description.</p>
                 }
             </div>

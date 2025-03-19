@@ -13,6 +13,9 @@ import { UserSubscriptionComponent } from './modules/userModule/user-subscriptio
 import { AllEventsComponent } from './modules/userModule/all-events/all-events.component';
 import { EventComponent } from './modules/userModule/event/event.component';
 import { BookingComponent } from './modules/userModule/booking/booking.component';
+import { TicketComponent } from './modules/userModule/ticket/ticket.component';
+import { BookedComponent } from './modules/userModule/booked/booked.component';
+import { EventEntryComponent } from './modules/userModule/event-entry/event-entry.component';
 
 export const routes: Routes = [
     {
@@ -44,8 +47,12 @@ export const routes: Routes = [
             { path: 'event/:eventId', component: EventComponent },
             { path: 'event/booking/:seats', component: BookingComponent },
             { path: 'organize-events', component: OrganizeEventComponent },
+            { path: 'entry/:eventId', component: EventEntryComponent },
+            { path: 'booked', component: BookedComponent },
             { path: 'subscription', component: UserSubscriptionComponent },
         ]
+    },
+    {
+        path: 'ticket/:bookingId', component: TicketComponent
     }
-
 ];

@@ -4,10 +4,10 @@
         <button type="button" routerLinkActive="selected" [routerLink]="['/',userId(),'all-event']">Events</button>
         <button type="button" routerLinkActive="selected" [routerLink]="['/',userId(),'organize-events']">Organize
             Events</button>
+        <button type="button" routerLinkActive="selected" [routerLink]="['/',userId(),'booked']">Booked</button>
         <button type="button" routerLinkActive="selected"
             [routerLink]="['/',userId(),'subscription']">Subscription</button>
         <button type="button" routerLinkActive="selected">Payments</button>
-        <button type="button" routerLinkActive="selected">Notification</button>
     </div>
     <div class="user-side-main-content">
         <router-outlet />

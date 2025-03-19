@@ -27,6 +27,19 @@ export interface SubscriptionPlan {
     }
 }
 
+export interface SubscriptionPayment {
+    _id: string;
+    _rev?:string
+    data: {
+        user: string;
+        subscribeddetail: string;
+        paid: number;
+        datetime: string;
+        type: "subscriptionpayment";
+    };
+}
+
+
 //  Validations Methods(AsyncValidators)
 export function isExistDaysValid(http: HttpClient): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {

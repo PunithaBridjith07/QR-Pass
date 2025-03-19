@@ -1,4 +1,5 @@
 <div class="booking-container">
+    <button class="event-go-back" (click)="onNavigateBack()">&#11207;</button>
     <h1>QR-Pass Ticket</h1>
     <div class="booking-detail-division">
         <img [src]="selectedEventDetail()?.data?.imageurl" [alt]="selectedEventDetail()?.data?.eventname">
@@ -6,22 +7,58 @@
             <div class="booking-bill">
                 <p>Event: <span>{{selectedEventDetail()?.data?.eventname}}</span></p>
                 <p>Seats: <span>{{seatNames().toString()|uppercase}}</span></p>
-                <p>Date: <span>{{selectedEventDetail()?.data?.date|date}}</span></p>
-                <p>Time: <span>{{selectedEventDetail()?.data?.time}}</span></p>
-                <p class="total-amount">Total Amount: <span>totalAmount</span>
-                    <span class="original-amount">original-amount</span> <span class="offer-percent">offerpercent</span>
+                <p>Date: <span>{{selectedEventDetail()?.data?.date|date:'dd-MM-yyyy'}}</span></p>
+                <p>
+                    Time:
+                    <span>
+                        @if (selectedEventDetail()?.data?.time) {
+                        {{ selectedEventDetail()?.data?.time | date:'h:mm a' }}
+                        } @else {
+                        N/A
+                        }
+                    </span>
+                </p>
+                <p>
+                    Total Amount: <span class="total-amount">{{totalAmount()|currency:'INR': 'symbol' : '1.0-0'}}</span>
+                    @if (bookedCount()>0) {
+                    <span class="original-amount">{{originalAmount()|currency:'INR': 'symbol' : '1.0-0'}}</span> -
+                    <span class="offer-percent">{{(selectedEventDetail()?.data?.offerpercent)!/100|percent}}</span>
+                    }
                 </p>
             </div>
-            <form>
+            <form [formGroup]="eventProofForm" (ngSubmit)="onBookEvent()">
                 <h1>Event Proof</h1>
                 <div class="control">
                     <label for="aadhar">Aadhar Proof (User)</label>
-                    <input type="text" name="aadhar" id="aadhar" autofocus>
+                    <input type="text" name="aadhar" id="aadhar" formControlName="aadhar">
+
+                    @if (eventProofForm.controls['aadhar'].touched &&
+                    eventProofForm.controls['aadhar'].errors?.['pattern']) {
+                    <p class="error">Enter a valid 12-digit Aadhar number.</p>
+                    }
+                    @if
+                    (eventProofForm.controls['aadhar'].touched&&eventProofForm.controls['aadhar'].errors?.['required'])
+                    {
+                    <p class="error">Aadhar number is required.</p>
+                    }
                 </div>
+
                 <div class="button-container">
-                    <button type="button" class="confirm-book">Book</button>
+                    <button type="submit" class="confirm-book">Book Now</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@if (isBookingSuccessful()) {
+<div class="overlay">
+    <div class="container">
+        <div class="success-icon">
+            <span>🎟️</span> <span>💳</span>
+        </div>
+        <h1>Booking & Payment Successful</h1>
+        <p>Your event booking and payment were completed successfully!</p>
+        <p>A confirmation email has been sent with your booking details.</p>
+    </div>
+</div>
+}

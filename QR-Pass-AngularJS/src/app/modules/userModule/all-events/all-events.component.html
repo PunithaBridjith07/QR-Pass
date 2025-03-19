@@ -3,7 +3,7 @@
     <ul class="event-cards">
         @if(allEvents().length>0){
         @for (event of allEvents(); track $index) {
-        <li class="event-card" (click)="onSelectEventCard(event._id)">
+        <li class="event-card" (keypress)="onSelectEventCard(event._id)" (click)="onSelectEventCard(event._id)">
             <img [src]="event.data.imageurl" [alt]="event.data.eventname" class="event-image">
             <div class="event-card-content">
                 <h2 class="event-title">{{event.data.eventname|titlecase}}</h2>
@@ -12,7 +12,7 @@
                     {{event.data.state}}</p>
                 <div class="event-date-time">
                     <p><strong>📅 Date:</strong> {{event.data.date|date:'dd-MM-yyyy'}}</p>
-                    <p><strong>⏰ Time:</strong> {{event.data.time}}</p>
+                    <p><strong>⏰ Time:</strong> {{event.data.time|date:'h:mm a'}}</p>
                 </div>
                 <div class="event-pricing">
                     <p class="event-price">{{event.data.price|currency:'INR'}}</p>

@@ -1,9 +1,9 @@
 import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
-import { Districts, districts, Event, indianStates, isArtistAvailable, isVenueAvailable, offerPercentValid, Seat, State, SubscribedDetail } from './organize-event.model';
-import { catchError, map, Observable, of, Subscription } from 'rxjs';
+import { Districts, districts, EventData, indianStates, isArtistAvailable, offerPercentValid, Seat, State, SubscribedDetail } from './organize-event.model';
+import { Subscription } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid'
 import { CurrencyPipe, DatePipe, PercentPipe, TitleCasePipe } from '@angular/common';
 import { DatabaseService } from '../../../services/database.service';
@@ -32,10 +32,10 @@ export class OrganizeEventComponent implements OnInit {
         [Validators.required, Validators.min(1), offerPercentValid('offerApplicable')]
       ],
       date: ['', [Validators.required]],
-      time: ['', [Validators.required], [isVenueAvailable(this.http, 'date', 'time', this.isEmptyObject(this.editEvent()))]],
+      time: ['', [Validators.required], [isArtistAvailable(this.http, 'artist', 'date', this.editEvent()?._id)]],
       venue: ['', [Validators.required]],
       image: [null],
-      state: ['TamilNadu', [Validators.required]],
+      state: ['TamilNadu' as State, [Validators.required]],
       district: [{ value: '', disabled: true }, [Validators.required]],
       locationViaMap: ['', [Validators.required]],
       description: ['', [Validators.required]]
@@ -43,8 +43,7 @@ export class OrganizeEventComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-
+  ngOnInit() {
     this.getEventByOrganizedId(this.userId().split('_2_')[1])
     this.setSubscribedDetail("active")
 
@@ -60,7 +59,9 @@ export class OrganizeEventComponent implements OnInit {
     });
 
     const date = new Date()
+
     this.currentDate.set(`${date.getFullYear()}-${(date.getMonth() + 1) <= 9 ? ('0' + (date.getMonth() + 1).toString()) : date.getMonth() + 1}-${date.getDate()}`)
+
   }
 
   //  Injections
@@ -73,7 +74,7 @@ export class OrganizeEventComponent implements OnInit {
   protected subscription!: Subscription
   protected eventForm: FormGroup
 
-  protected organizedEvents = signal<Event[]>([])
+  protected organizedEvents = signal<EventData[]>([])
   protected subscribedDetail = signal<SubscribedDetail | null>(null)
   isSubscribed = signal<boolean>(false)
   selectedImage = signal<File | null>(null)
@@ -82,7 +83,7 @@ export class OrganizeEventComponent implements OnInit {
   states = signal<State[]>(indianStates)
   districts = signal<Districts>(districts)
 
-  editEvent = signal<Event | null>(null)
+  editEvent = signal<EventData | null>(null)
   isFormVisible = signal<boolean>(false)
   currentDate = signal<string>('')
 
@@ -102,7 +103,6 @@ export class OrganizeEventComponent implements OnInit {
   }
 
   onCreateEvent() {
-    console.log(this.eventForm);
 
     if (this.eventForm.valid) {
       const eventId = `event_2_${uuidv4()}`
@@ -115,13 +115,19 @@ export class OrganizeEventComponent implements OnInit {
             this.imagePath.set(response.eventImage);
             if (this.imagePath()) {
               //  Convert upload image to Path
-              const data: Event = {
+              const data: EventData = {
                 _id: eventId,
                 data: {
                   eventname: this.eventForm.value.eventName,
                   artist: this.eventForm.value.artist,
-                  date: this.eventForm.value.date,
-                  time: this.eventForm.value.time,
+                  date: new Date(this.eventForm.value.date).toISOString(),
+                  time: new Date(new Date(this.eventForm.value.date).setHours(Number(this.eventForm.value.time.split(':')[0]), Number(this.eventForm.value.time.split(':')[1]))).toISOString(),
+                  // time: new Date(
+                  //   new Date().getFullYear(),
+                  //   new Date().getMonth(),
+                  //   new Date().getDate(),
+                  //   ...this.eventForm.value.time.split(':').map(Number) // Ensure timeString is taken from the form
+                  // ).toISOString(), // Convert to ISO format,
                   seats: Number(this.eventForm.value.seats),
                   price: Number(this.eventForm.value.price),
                   venue: this.eventForm.value.venue,
@@ -133,7 +139,7 @@ export class OrganizeEventComponent implements OnInit {
                   description: this.eventForm.value.description,
                   imageurl: this.imagePath(),
                   user: this.userId().split('_2_')[1],
-                  createdat: new Date(),
+                  createdat: new Date().toISOString(),
                   type: "event"
                 }
               }
@@ -168,6 +174,7 @@ export class OrganizeEventComponent implements OnInit {
     }
   }
 
+  //  Handle while update the Event Detail
   /* **********************Important to validate update time********************* */
   private updateAsyncValidators(editEventId: string) {
     this.eventForm.get('time')?.setAsyncValidators(
@@ -176,17 +183,20 @@ export class OrganizeEventComponent implements OnInit {
     this.eventForm.get('time')?.updateValueAndValidity();
   }
 
+  //  Update Event Detail
   onUpdateOrganizedEvent() {
+    console.log("Updating....");
+
     if (this.eventForm.valid) {
       const editEvent = this.editEvent()
       if (editEvent) {
-        const updatedData: Event = {
+        const updatedData: EventData = {
           ...editEvent,
           data: {
             ...editEvent.data,
             artist: this.eventForm.value.artist,
-            date: this.eventForm.value.date,
-            time: this.eventForm.value.time,
+            date: new Date(this.eventForm.value.date).toISOString(),
+            time: new Date(new Date(this.eventForm.value.date).setHours(Number(this.eventForm.value.time.split(':')[0]), Number(this.eventForm.value.time.split(':')[1]))).toISOString(),
             seats: this.eventForm.value.seats,
             description: this.eventForm.value.description,
             imageurl: this.imagePath(),
@@ -194,7 +204,8 @@ export class OrganizeEventComponent implements OnInit {
         }
         this.subscription = this.dbService.updateEvent(editEvent._id, updatedData).subscribe({
           next: (response) => {
-            this.getEventByOrganizedId(`user_2_${editEvent.data.user}`);
+
+            this.getEventByOrganizedId(editEvent.data.user);
           },
           complete: () => {
             this.editEvent.set(null)
@@ -208,10 +219,7 @@ export class OrganizeEventComponent implements OnInit {
     }
   }
 
-  // onOfferPercentDisable() {
-
-  // }
-
+  //  Handle Visible of eventForm
   triggerFormVisible() {
     this.editEvent.set(null)
     this.eventForm.reset()
@@ -227,6 +235,7 @@ export class OrganizeEventComponent implements OnInit {
     this.isFormVisible.set(true)
   }
 
+  //  Trigger set Edit EventForm with Disabled Fields
   triggerUpdate(_id: string) {
     this.eventForm.get('eventName')?.disable()
     this.eventForm.get('price')?.disable()
@@ -240,27 +249,30 @@ export class OrganizeEventComponent implements OnInit {
     this.onSetEventForm(_id)
   }
 
+  //  Close Form
   triggerCancel() {
     this.eventForm.reset()
     this.editEvent.set(null)
     this.isFormVisible.set(false)
   }
+
+  //  Check editEvent null or not
   isEmptyObject(obj: any): boolean {
     return obj === null;
   }
 
-  get fromCurrentDate() {
-    const minDate: string = new Date().toISOString().split('T')[0];
-    return minDate;
-  }
-
-  //  Private or Protected Methods
+  //  Get Event By UserId(Organizer)
   protected getEventByOrganizedId(OrganizedId: string) {
+
     const subscription: Subscription = this.dbService.getOrganizedEventDetail(OrganizedId).subscribe({
       next: (response) => {
-        if (response.rows) {
-          this.organizedEvents.set(response.rows.map((organizedEvent: any) => organizedEvent.value))
-        }
+        const currentTime = new Date()
+
+        response.rows.length > 0 ?
+          this.organizedEvents.set(response.rows.map((organizedEvent: any) => organizedEvent.value).filter((organizedEvent: EventData) => {
+            const eventTime = new Date(organizedEvent.data.time)
+            return currentTime < eventTime
+          })) : this.organizedEvents.set([])
         console.log(this.organizedEvents());
 
       },
@@ -271,6 +283,7 @@ export class OrganizeEventComponent implements OnInit {
     })
   }
 
+  //  Update Subscription Status (active or expired)
   protected setSubscribedDetail(status: string) {
     const subscription: Subscription = this.dbService.getSubscribedDetail(status).subscribe({
       next: (response) => {
@@ -313,11 +326,9 @@ export class OrganizeEventComponent implements OnInit {
       return new Date(year, month - 1, day);
     };
 
-
     const currentDate = new Date();
     const start = parseDate(startDate);
     const end = parseDate(endDate);
-
 
     return currentDate >= start && currentDate <= end;
   }
@@ -329,7 +340,7 @@ export class OrganizeEventComponent implements OnInit {
       data: {
         event: eventId.split('_2_')[1],
         type: "seat",
-        seats:{}
+        seats: {}
       }
     };
 
@@ -340,36 +351,56 @@ export class OrganizeEventComponent implements OnInit {
     return seat
   }
 
-
+  //  Set Event Detail to eventForm to Update
   protected onSetEventForm(_id: string) {
-    this.subscription = this.dbService.getEventDetail(_id).subscribe({
-      next: (response) => {
-        this.editEvent.set(response.rows[0].value);
-        const editEvent = this.editEvent()
+
+    this.subscription = this.dbService.getEventById(_id).subscribe({
+      next: (response: any) => {
+
+        // Ensure eventData is a single Event object
+        if (!response || (Array.isArray(response.rows) && response.length === 0)) {
+          console.warn("No event data available");
+          return;
+        }
+
+        // let eventData: Event = Array.isArray(event) ? event[0] : event;
+        let eventData: EventData = response.rows[0].value;
+
+        // Check if eventData has expected properties
+        if (!eventData._id) {
+          console.error("Invalid event data structure:", eventData);
+          return;
+        }
+
+        this.editEvent.set(eventData);
+        const editEvent = this.editEvent();
+
         if (editEvent) {
           this.eventForm.patchValue({
-            eventName: editEvent.data.eventname,
-            artist: editEvent.data.artist,
-            date: editEvent.data.date,
-            time: editEvent.data.time,
-            seats: editEvent.data.seats,
-            price: editEvent.data.price,
-            venue: editEvent.data.venue,
-            state: editEvent.data.state,
-            district: editEvent.data.district,
-            locationViaMap: editEvent.data.locationviamap,
-            offerApplicable: editEvent.data.offerapplicable,
-            offerPercent: editEvent.data.offerpercent,
-            description: editEvent.data.description
-          })
-          this.imagePath.set(editEvent.data.imageurl);
-          this.updateAsyncValidators(editEvent._id)
+            eventName: editEvent.data.eventname ?? '',
+            artist: editEvent.data.artist ?? '',
+            date: editEvent.data.date.split('T')[0] ?? '',
+            time: new Date(editEvent.data.time).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }) ?? '',
+            seats: editEvent.data.seats ?? '',
+            price: editEvent.data.price ?? '',
+            venue: editEvent.data.venue ?? '',
+            state: editEvent.data.state ?? '',
+            district: editEvent.data.district ?? '',
+            locationViaMap: editEvent.data.locationviamap ?? '',
+            offerApplicable: editEvent.data.offerapplicable ?? false,
+            offerPercent: editEvent.data.offerpercent ?? 0,
+            description: editEvent.data.description ?? ''
+          });
+
+          this.imagePath.set(editEvent.data.imageurl ?? '');
+          this.updateAsyncValidators(editEvent._id);
         }
       },
       complete: () => {
-        this.isFormVisible.set(true)
-        this.destroyRef.onDestroy(() => this.subscription.unsubscribe())
+        this.isFormVisible.set(true);
+        this.destroyRef.onDestroy(() => this.subscription.unsubscribe());
       }
-    })
+    });
   }
+
 }

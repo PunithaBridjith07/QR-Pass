@@ -182,11 +182,12 @@ h4 {
     z-index: 1000;
 }
 
-/* Seat Selection Division */
+/* Seat Selection Division - Prevent overflow */
 .seat-selection-division {
     background: white;
     padding: 20px;
     width: auto;
+    max-height: 90vh; /* Prevent from exceeding screen height */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
@@ -195,6 +196,7 @@ h4 {
     gap: 10px;
     text-align: center;
     border: 5px solid blueviolet;
+    overflow-y: auto; /* Enable scrolling if content exceeds */
 }
 
 
@@ -228,10 +230,13 @@ h4 {
     opacity: 1;
 }
 
+/* Seat Container - Prevent content overflow */
 .seat-container {
+    overflow-y: auto;
     margin: 0 auto;
-    padding: 50px;
-    width: 60%;
+    padding: 20px;
+    width: 80%;
+    max-height: 60vh; /* Adjust to ensure seats don't push content off-screen */
 }
 
 .seat-container h5 {

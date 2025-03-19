@@ -308,7 +308,7 @@
 }
 
 .button-control button:first-child {
-    background: grey;
+    background: #f44336;
     color: white;
 }
 
@@ -360,6 +360,15 @@ input.ng-valid.ng-touched {
     border-color: blueviolet;
 }
 
+select.ng-invalid.ng-touched {
+    border-color: red;
+    background-color: lightcoral;
+}
+
+select.ng-valid.ng-touched {
+    border-color: blueviolet;
+}
+
 textarea.ng-invalid.ng-touched {
     border-color: red;
     background-color: lightcoral;
@@ -368,3 +377,4 @@ textarea.ng-invalid.ng-touched {
 textarea.ng-valid.ng-touched {
     border-color: blueviolet;
 }
+

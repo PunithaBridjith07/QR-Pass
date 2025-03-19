@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
-import { Seat } from '../modules/userModule/organize-event/organize-event.model';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { Booking } from '../modules/userModule/booking/booking.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,45 +27,53 @@ export class DatabaseService {
   }
 
   //  Event CRUD
-  getEventDetail(_id?: string) {
-    if (_id) {
-      const URL = `${this.baseURL}/_design/Views/_view/eventbyid?key="${_id}"`;
-      return this.http.get<any>(URL, { headers: this.headers })
-    } else {
-      const URL = `${this.baseURL}/_design/Views/_view/eventbyid`
-      return this.http.get<any>(URL, { headers: this.headers })
-    }
+  getEventDetail() {
+    const URL = `${this.baseURL}/_design/Views/_view/eventbyid`;
+
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
+  }
+
+  getEventById(_id: string) {
+    const URL = `${this.baseURL}/_design/Views/_view/eventbyid?key="${_id}"`
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   createEvent(data: any) {
     const URL = `${this.baseURL}`;
-    return this.http.post<any>(URL, data, { headers: this.headers })
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
-  updateEvent(_id: string, data: any) {
-    const URL = `${this.baseURL}/${_id}`;
-    return this.http.put<any>(URL, data, { headers: this.headers });
+  updateEvent(eventId: string, data: any) {
+    const URL = `${this.baseURL}/${eventId}`;
+    return this.http.put<any>(URL, data, { headers: this.headers })
   }
 
   //  Organized Event CRUD
-  getOrganizedEventDetail(organizedId?: string) {
-    if (organizedId) {
-      const URL = `${this.baseURL}/_design/Views/_view/eventbyorganizedid?key="${organizedId}"`;
-      return this.http.get<any>(URL, { headers: this.headers })
-    } else {
-      const URL = `${this.baseURL}/_design/Views/_view/eventbyorganizedid`
-      return this.http.get<any>(URL, { headers: this.headers })
-    }
+  getOrganizedEventDetail(organizedId: string) {
+    const URL = `${this.baseURL}/_design/Views/_view/eventbyorganizedid?key="${organizedId}"`;
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   createOrganizedEvent(data: any) {
     const URL = `${this.baseURL}`;
-    return this.http.post<any>(URL, data, { headers: this.headers })
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
-  updateOrganizedEvent(_id: string, data: any) {
+  updateOrganizedEvent(_id: string, data: Event) {
     const URL = `${this.baseURL}/${_id}`;
-    return this.http.put<any>(URL, data, { headers: this.headers });
+    return this.http.put<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   //  Seat CRUD
@@ -79,12 +87,66 @@ export class DatabaseService {
 
   createEventSeatDetail(data: any) {
     const URL = `${this.baseURL}`;
-    return this.http.post<any>(URL, data, { headers: this.headers })
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
-  updateSeatDetail(eventId: string, data: any) {
-    const URL = `${this.baseURL}/_design/Views/_view/seatbyeventid?key="${eventId}"`
-    return this.http.put<any>(URL, data, { headers: this.headers })
+  updateSeatDetail(_id: string, data: any) {
+    const URL = `${this.baseURL}/${_id}`
+    return this.http.put<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
+  }
+
+  //  Booking CRUD
+  getBookingCount(userId: string) {
+    const URL = `${this.baseURL}/_design/Views/_view/bookedcountbyuserid?key="${userId}"&reduce=true`
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
+  }
+
+  getBookingByUserId(userId: string): Observable<any> {
+    const URL = `${this.baseURL}/_design/Views/_view/bookingbyuserid?key="${userId}"`
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
+  }
+
+  getBookingById(_id: string) {
+    const URL = `${this.baseURL}/_design/Views/_view/bookingbyid?key="${_id}"`
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
+  }
+
+  createBooking(data: Booking): Observable<any> {
+    const URL = `${this.baseURL}`;
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => {
+        return throwError(() => new Error("Failed to create booking. Please try again.", error));
+      })
+    );
+  }
+
+  updateBooking(_id: string, data: Booking) {
+    const URL = `${this.baseURL}/${_id}`;
+    return this.http.put<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => {
+        return throwError(() => new Error("Failed to update check-in. Please try again.", error));
+      })
+    );
+  }
+
+  //  Scanner CRUD
+  getCheckedInBooking() {
+    const URL = `${this.baseURL}/_design/Views/_view/bookingbycheckedin`
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => {
+        return throwError(() => new Error("Failed to fetch checked-In Booking. Please try again.", error));
+      })
+    );
   }
 
   //  Subscription Plan CRUD
@@ -94,54 +156,74 @@ export class DatabaseService {
       return this.http.get<any>(URL, { headers: this.headers });
     }
     const URL = `${this.baseURL}/_design/Views/_view/subscriptionplanbyid`;
-    return this.http.get<any>(URL, { headers: this.headers });
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   createSubscriptionPlan(data: any) {
     const URL = `${this.baseURL}`;
-    return this.http.post<any>(URL, data, { headers: this.headers });
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   updateSubscriptionPlan(_id: string, data: any) {
     const URL = `${this.baseURL}/${_id}`;
-    return this.http.put<any>(URL, data, { headers: this.headers })
+    return this.http.put<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   //  Subscription Offer CRUD
   getSubscriptionOffer(_id?: string) {
     if (_id) {
       const URL = `${this.baseURL}/_design/Views/_view/subscriptionofferbyid?key="${_id}"`;
-      return this.http.get<any>(URL, { headers: this.headers });
+      return this.http.get<any>(URL, { headers: this.headers }).pipe(
+        catchError((error) => error)
+      );
     } else {
       const URL = `${this.baseURL}/_design/Views/_view/subscriptionofferbyid`;
-      return this.http.get<any>(URL, { headers: this.headers })
+      return this.http.get<any>(URL, { headers: this.headers }).pipe(
+        catchError((error) => error)
+      );
     }
   }
 
   createSubscriptionOffer(data: any) {
     const URL = `${this.baseURL}`;
-    return this.http.post<any>(URL, data, { headers: this.headers })
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   updateSubscriptionOffer(_id: string, data: any) {
     const URL = `${this.baseURL}/${_id}`;
-    return this.http.put<any>(URL, data, { headers: this.headers })
+    return this.http.put<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   //  Subscribed Details CRUD
   getSubscribedDetail(status: string) {
     let URL = `${this.baseURL}/_design/Views/_view/subscribeddetailsbystatus?key="${status}"`;
-    return this.http.get<any>(URL, { headers: this.headers })
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   addSubscribedDetail(data: any) {
     const URL = `${this.baseURL}`;
-    return this.http.post<any>(URL, data, { headers: this.headers })
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   updateSubscribedDetail(_id: string, data: any) {
     const URL = `${this.baseURL}/${_id}`;
-    return this.http.put<any>(URL, data, { headers: this.headers })
+    return this.http.put<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   //  Payment CRUD
@@ -153,24 +235,64 @@ export class DatabaseService {
     if (reduce === 'true') {
       URL += type ? `&reduce=true` : `?reduce=true`;
     }
-    return this.http.get<any>(URL, { headers: this.headers });
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
 
   addPaymentDetail(data: any) {
     const URL = `${this.baseURL}`;
-    return this.http.post<any>(URL, data, { headers: this.headers })
+    return this.http.post<any>(URL, data, { headers: this.headers }).pipe(
+      catchError((error) => error)
+    );
   }
+
+
+
+
+  readonly nodeJsBaseURL = 'http://localhost:8000'
 
   //  Subscription Confirmation Via NodeJS
   onPaySubscription(data: any) {
-    const URL = `http://localhost:8000/send-subscribed-email`
-    return this.http.post<any>(URL, data)
+    const URL = `${this.nodeJsBaseURL}/send-subscribed-email`
+    return this.http.post<any>(URL, data).pipe(
+      catchError((error) => error)
+    );
   }
 
   //  Save image to Separate Folder Via NodeJs
   onStoreEventImage(userId: string, eventId: string, imageData: FormData) {
-    const URL = `http://localhost:8000/event-image/${userId}/${eventId}`;
-    return this.http.post<any>(URL, imageData)
+    const URL = `${this.nodeJsBaseURL}/event-image/${userId}/${eventId}`;
+    return this.http.post<any>(URL, imageData).pipe(
+      catchError((error) => error)
+    );
   }
 
+  //  Send QR code to Email Via NodeJS
+  onBookEvent(data: any) {
+    console.log(data);
+    const URL = `${this.nodeJsBaseURL}/generate-qr`
+    return this.http.post<any>(URL, data).pipe(
+      catchError((error) => error)
+    );
+  }
+
+  //  Download PDF
+  onDownloadPdf(data: any) {
+    
+    const URL = `${this.nodeJsBaseURL}/download-ticket`;
+
+    return this.http.post(URL, data, {
+      responseType: 'blob' // Important for binary data
+    });
+  }
+
+
+  // //  Send Booking Payment Confirmation Via NodeJS
+  // onPayEventBooking(data: any) {
+  //   const URL = `${this.nodeJsBaseURL}/send-booking-email`
+  //   return this.http.post<any>(URL, data).pipe(
+  //     catchError((error) => error)
+  //   );
+  // }
 }

@@ -1,0 +1,31 @@
+<div class="event-entry-division">
+    <div class="scanner">
+        <zxing-scanner #scanner [formats]="allowedFormat" (autostarting)="false" (scanSuccess)="onScanQR($event)"
+            (scanComplete)="onRedirectTicket()"></zxing-scanner>
+        <h3>Scanner to entry Ticket</h3>
+    </div>
+    <div class="ticket-entered-division">
+        @if(checkedInBooking().length>0){<div class="ticket-table-container">
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Proof</th>
+                        <th>Seats</th>
+                        <th>Checked-In</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (checked of checkedInBooking(); track $index) {
+                    <tr>
+                        <td>{{checked.data.userproof}}</td>
+                        <td>{{checked.data.bookedseats|uppercase}}</td>
+                        <td class="checked-in">✔</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>}@else{
+        <h3 class="not-found">No organized events available at the moment.</h3>
+        }
+    </div>
+</div>

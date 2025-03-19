@@ -1,0 +1,33 @@
+<div class="ticket-container">
+    <div class="ticket">
+        <div class="top left"></div>
+        <div class="top right"></div>
+        <div class="bottom left"></div>
+        <div class="bottom right"></div>
+        <div class="ticket-border">
+            <div class="ticket-header">
+                <div class="event-title">
+                    <h2>{{event()?.data?.eventname}}</h2>
+                    <p class="event-date">{{event()?.data?.date|date:'dd-MM-yyyy'}}</p>
+                </div>
+            </div>
+
+            <div class="ticket-body">
+                <p><strong>Seats:</strong> <span>{{ticket()?.data?.bookedseats|uppercase}}</span></p>
+                <p><strong>Time:</strong> <span>{{event()?.data?.time|date:'h:mm a'}}</span></p>
+                <p><strong>Total Amount:</strong>
+                    <span class="total-amount">{{ticket()?.data?.totalamount|currency:'INR'}}</span>
+                </p>
+                <p><strong>Event Proof (Aadhar No):</strong>
+                    <span class="aadhar-number">{{ticket()?.data?.userproof}}</span>
+                </p>
+            </div>
+
+            <div class="ticket-footer">
+                <p>Thank you for booking with us!</p>
+                <p>Enjoy your event and have a great time.</p>
+            </div>
+        </div>
+    </div>
+    <!-- <button class="back-button" (click)="onNavigateEntryBooking()">⬅ Back to Entry</button> -->
+</div>

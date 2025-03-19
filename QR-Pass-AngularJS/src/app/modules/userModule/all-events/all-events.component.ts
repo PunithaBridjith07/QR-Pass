@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
-import { Event } from '../organize-event/organize-event.model';
+import { EventData } from '../organize-event/organize-event.model';
 import { CurrencyPipe, DatePipe, PercentPipe, TitleCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, map, of, Subscription } from 'rxjs';
@@ -33,7 +33,7 @@ export class AllEventsComponent implements OnInit {
 
   protected subscription!: Subscription
 
-  allEvents = signal<Event[]>([])
+  allEvents = signal<EventData[]>([])
   selectEvent = signal<boolean>(false)
 
   //  Card Methods
@@ -60,11 +60,12 @@ export class AllEventsComponent implements OnInit {
         forkJoin(eventRequests).subscribe({
           next: (events: any) => {
             this.allEvents.set(events.flat());
+
           },
-          complete: () => this.subscription.unsubscribe()
+          // complete: () => this.subscription.unsubscribe()
         });
       },
-      complete: () => this.subscription.unsubscribe()
+      complete: () => this.destroyRef.onDestroy(() => this.subscription.unsubscribe())
     });
   }
 
